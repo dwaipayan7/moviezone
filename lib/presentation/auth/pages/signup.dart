@@ -2,11 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:moviezone/common/helper/navigation/app_navigation.dart';
 import 'package:moviezone/core/configs/themes/app_colors.dart';
+import 'package:moviezone/presentation/auth/pages/signin_dart.dart';
 import 'package:moviezone/presentation/auth/pages/signup.dart';
 import 'package:reactive_button/reactive_button.dart'; // Ensure this package is properly added
 
-class SigninPage extends StatelessWidget {
-  const SigninPage({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class SigninPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _signInText(),
+              _signupText(),
               const SizedBox(height: 40),
               _emailField(),
               const SizedBox(height: 20),
@@ -27,7 +28,7 @@ class SigninPage extends StatelessWidget {
               const SizedBox(height: 50),
               _signInButton(),
               const SizedBox(height: 30),
-              _signupText(context),
+              _signInText(context),
             ],
           ),
         ),
@@ -35,9 +36,9 @@ class SigninPage extends StatelessWidget {
     );
   }
 
-  Widget _signInText() {
+  Widget _signupText() {
     return const Text(
-      'Sign In',
+      'Sign Up',
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -82,7 +83,7 @@ class SigninPage extends StatelessWidget {
 
   Widget _signInButton() {
     return ReactiveButton(
-      title: "Sign In",
+      title: "Sign Up",
       activeColor: AppColors.primary,
       onPressed: () async {
         // Add sign-in logic here
@@ -96,23 +97,23 @@ class SigninPage extends StatelessWidget {
     );
   }
 
-  Widget _signupText(BuildContext context) {
+  Widget _signInText(BuildContext context) {
     return RichText(
       text: TextSpan(
         children: [
           const TextSpan(
-            text: "Don't have an account? ",
+            text: "Do you have account? ",
             style: TextStyle(color: Colors.white70),
           ),
           TextSpan(
-            text: "Sign Up",
+            text: "Sign In",
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.bold,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                AppNavigator.push(context, const SignUpPage());
+                AppNavigator.push(context, const SigninPage());
               },
           ),
         ],
