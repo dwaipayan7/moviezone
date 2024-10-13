@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviezone/presentation/auth/pages/signin_dart.dart';
 import 'package:moviezone/presentation/splash/bloc/splash_cubit.dart';
 import 'package:moviezone/presentation/splash/pages/splash.dart';
 
