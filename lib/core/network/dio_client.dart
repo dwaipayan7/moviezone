@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:moviezone/core/constants/api_url.dart';
 
 import 'intersectors.dart';
 
@@ -7,7 +8,7 @@ class DioClient {
   late final Dio _dio;
   DioClient(): _dio = Dio(
     BaseOptions(
-        baseUrl: ''  ,
+        baseUrl: ApiUrl.baseURL ,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8'
         },
