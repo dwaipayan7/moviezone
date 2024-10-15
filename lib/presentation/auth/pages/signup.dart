@@ -2,12 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:moviezone/common/helper/navigation/app_navigation.dart';
 import 'package:moviezone/core/configs/themes/app_colors.dart';
+import 'package:moviezone/data/auth/models/auth/signup_req_params.dart';
+import 'package:moviezone/data/auth/repositories/auth/auth.dart';
+import 'package:moviezone/data/auth/sources/auth/auth_api_service.dart';
+import 'package:moviezone/domain/auth/usecases/signup.dart';
 import 'package:moviezone/presentation/auth/pages/signin_dart.dart';
 import 'package:moviezone/presentation/auth/pages/signup.dart';
 import 'package:reactive_button/reactive_button.dart'; // Ensure this package is properly added
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+   SignUpPage({super.key});
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +58,7 @@ class SignUpPage extends StatelessWidget {
 
   Widget _emailField() {
     return TextField(
+      controller: _emailController,
       decoration: InputDecoration(
         hintText: "Email",
         hintStyle: TextStyle(color: Colors.white70),
@@ -66,6 +76,7 @@ class SignUpPage extends StatelessWidget {
 
   Widget _passwordField() {
     return TextField(
+      controller: _passwordController,
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Password",
@@ -77,7 +88,7 @@ class SignUpPage extends StatelessWidget {
           borderSide: BorderSide.none,
         ),
       ),
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
     );
   }
 
@@ -87,6 +98,16 @@ class SignUpPage extends StatelessWidget {
       activeColor: AppColors.primary,
       onPressed: () async {
         // Add sign-in logic here
+        SignupUseCase(
+            authRepository:
+            AuthRepositoryImpl(
+                authApiService: AuthApiServiceImpl())
+        ).call(
+          params: SignupReqParams(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim()
+          )
+        );
       },
       onSuccess: () {
         // Success logic here
@@ -107,7 +128,7 @@ class SignUpPage extends StatelessWidget {
           ),
           TextSpan(
             text: "Sign In",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.bold,
             ),

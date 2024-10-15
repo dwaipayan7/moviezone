@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:moviezone/core/constants/api_url.dart';
 import 'package:moviezone/core/network/dio_client.dart';
-
-import '../../../service_locator.dart';
+import '../../../../service_locator.dart';
+import '../../models/auth/signup_req_params.dart';
 
 abstract class AuthApiService{
   Future<Either> signup(SignupReqParams params);
@@ -17,11 +17,11 @@ class AuthApiServiceImpl extends AuthApiService{
      var response = sl<DioClient>().post(
 
        ApiUrl.signup,
-       data: params.toMap()
+       data: params.toMap(),
 
      );
 
-     return Right(response.data);
+     return Right(response);
 
    } on DioException catch(e){
      return Left(e.response!.data['message']);
