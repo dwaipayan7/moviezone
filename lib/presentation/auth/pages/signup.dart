@@ -8,7 +8,9 @@ import 'package:moviezone/data/auth/sources/auth/auth_api_service.dart';
 import 'package:moviezone/domain/auth/usecases/signup.dart';
 import 'package:moviezone/presentation/auth/pages/signin_dart.dart';
 import 'package:moviezone/presentation/auth/pages/signup.dart';
-import 'package:reactive_button/reactive_button.dart'; // Ensure this package is properly added
+import 'package:reactive_button/reactive_button.dart';
+
+import '../../../service_locator.dart'; // Ensure this package is properly added
 
 class SignUpPage extends StatelessWidget {
    SignUpPage({super.key});
@@ -98,16 +100,12 @@ class SignUpPage extends StatelessWidget {
       activeColor: AppColors.primary,
       onPressed: () async {
         // Add sign-in logic here
-        SignupUseCase(
-            authRepository:
-            AuthRepositoryImpl(
-                authApiService: AuthApiServiceImpl())
-        ).call(
-          params: SignupReqParams(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim()
-          )
-        );
+
+       await sl<SignupUseCase>().call(
+            params: SignupReqParams(
+                email: _emailController.text.trim(),
+                password: _passwordController.text.trim()
+        ));
       },
       onSuccess: () {
         // Success logic here
