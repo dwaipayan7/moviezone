@@ -3,7 +3,7 @@ import 'package:moviezone/domain/auth/repositories/auth.dart';
 
 class AuthRepositoryImpl extends AuthRepository{
   @override
-  Future<Either> signout() {
+  Future<Either> signup(SignupReqParams params) {
     // TODO: implement signout
     throw UnimplementedError();
   }
