@@ -2,15 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:moviezone/common/helper/navigation/app_navigation.dart';
 import 'package:moviezone/core/configs/themes/app_colors.dart';
-import 'package:moviezone/data/auth/models/auth/signup_req_params.dart';
-import 'package:moviezone/data/auth/repositories/auth/auth.dart';
-import 'package:moviezone/data/auth/sources/auth/auth_api_service.dart';
 import 'package:moviezone/domain/auth/usecases/signup.dart';
 import 'package:moviezone/presentation/auth/pages/signin_dart.dart';
 import 'package:moviezone/presentation/auth/pages/signup.dart';
 import 'package:reactive_button/reactive_button.dart';
 
-import '../../../service_locator.dart'; // Ensure this package is properly added
+import '../../../common/helper/message/display_message.dart';
+import '../../../data/auth/models/signup_req_params.dart';
+import '../../../service_locator.dart';
+import '../../home/pages/home.dart'; // Ensure this package is properly added
 
 class SignUpPage extends StatelessWidget {
    SignUpPage({super.key});
@@ -37,7 +37,7 @@ class SignUpPage extends StatelessWidget {
               const SizedBox(height: 20),
               _passwordField(),
               const SizedBox(height: 50),
-              _signInButton(),
+              _signUpButton(context),
               const SizedBox(height: 30),
               _signInText(context),
             ],
@@ -94,7 +94,7 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  Widget _signInButton() {
+  Widget _signUpButton(BuildContext context) {
     return ReactiveButton(
       title: "Sign Up",
       activeColor: AppColors.primary,
@@ -109,9 +109,12 @@ class SignUpPage extends StatelessWidget {
       },
       onSuccess: () {
         // Success logic here
+        AppNavigator.pushReplacement(context, HomePage());
       },
       onFailure: (err) {
         // Error handling logic here
+        DisplayMessage.errorMessage(err, context);
+
       },
     );
   }
@@ -132,7 +135,7 @@ class SignUpPage extends StatelessWidget {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                AppNavigator.push(context, const SigninPage());
+                AppNavigator.push(context,  SigninPage());
               },
           ),
         ],

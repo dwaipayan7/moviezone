@@ -1,17 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:moviezone/core/usecase/usecase.dart';
-import 'package:moviezone/data/auth/models/auth/signup_req_params.dart';
-import 'package:moviezone/domain/auth/repositories/auth.dart';
 
+import '../../../core/usecase/usecase.dart';
+import '../../../data/auth/models/signup_req_params.dart';
 import '../../../service_locator.dart';
+import '../repositories/auth.dart';
 
-class SignupUseCase extends UseCase<Either, SignupReqParams>{
 
-
+class SignupUseCase extends UseCase<Either,SignupReqParams> {
+  
   @override
-  Future<Either> call({SignupReqParams? params}) async{
+  Future<Either> call({SignupReqParams? params}) async {
     return await sl<AuthRepository>().signup(params!);
   }
-
-
+  
 }
