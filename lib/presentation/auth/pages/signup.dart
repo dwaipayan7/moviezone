@@ -113,6 +113,8 @@ class SignUpPage extends StatelessWidget {
       },
       onFailure: (err) {
         // Error handling logic here
+        // Success logic here
+        AppNavigator.pushAndRemove(context, HomePage());
         DisplayMessage.errorMessage(err, context);
 
       },
