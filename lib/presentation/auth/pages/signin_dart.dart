@@ -92,32 +92,40 @@ class SigninPage extends StatelessWidget {
     );
   }
 
-  Widget _signInButton(BuildContext context) {
-    return ReactiveButton(
-      title: "Sign In",
-      activeColor: AppColors.primary,
-      onPressed: () async {
-        // Add sign-in logic here
-        sl<SigninUseCase>().call(
-          params: SigninReqParams(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim()
-          )
-        );
-      },
-      onSuccess: () {
-        // Success logic here
-       AppNavigator.pushAndRemove(context, HomePage());
-      },
-      onFailure: (err) {
-        // Error handling logic here
-        // Success logic here
-        AppNavigator.pushAndRemove(context, HomePage());
-        DisplayMessage.errorMessage(err, context);
-        print(err);
-      },
-    );
-  }
+   Widget _signInButton(BuildContext context) {
+     return ReactiveButton(
+       title: "Sign In",
+       activeColor: AppColors.primary,
+       onPressed: () async {
+         // Trigger the sign-in use case and handle the result properly
+         var result = await sl<SigninUseCase>().call(
+           params: SigninReqParams(
+             email: _emailController.text.trim(),
+             password: _passwordController.text.trim(),
+           ),
+         );
+
+         // Handling the returned Either type from SigninUseCase
+         result.fold(
+               (error) {
+             // Failure scenario: Display the error message
+             DisplayMessage.errorMessage(error, context);
+           },
+               (data) {
+             // Success scenario: Navigate to HomePage
+             AppNavigator.pushAndRemove(context, HomePage());
+           },
+         );
+       },
+       onSuccess: () {
+         // Success callback can be left empty since we're handling it above
+       },
+       onFailure: (err) {
+         // Error handling is already handled in the onPressed
+       },
+     );
+   }
+
 
   Widget _signupText(BuildContext context) {
     return RichText(

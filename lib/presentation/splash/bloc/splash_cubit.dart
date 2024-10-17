@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:moviezone/domain/auth/usecases/is_logged_in.dart';
 
 import '../../../service_locator.dart';
